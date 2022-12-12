@@ -9,6 +9,14 @@ namespace Bank.API
     {
         public BankContext(DbContextOptions<BankContext> options) : base(options) { }
 
+        #region Required
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Employee>().HasData(
+                new Employee("pracownik", "jeden", "pracownik.jeden01@gmail.com"));
+        }
+        #endregion
+
         public DbSet<Client> Clients { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Inquiry> Inquiries { get; set; }
