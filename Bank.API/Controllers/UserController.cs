@@ -58,7 +58,7 @@ namespace Bank.API.Controllers
         }
 
         [HttpGet("Employee/{id:Guid}")]
-        public async Task<ActionResult<Client>> GetEmployeeByID(Guid id)
+        public async Task<ActionResult<Employee>> GetEmployeeByID(Guid id)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace Bank.API.Controllers
             }
         }
         [HttpGet("Employee/{email}")]
-        public async Task<ActionResult<Client>> GetEmployeeByEmail(string email)
+        public async Task<ActionResult<Employee>> GetEmployeeByEmail(string email)
         {
             try
             {
