@@ -19,9 +19,28 @@ namespace Bank.API.Controllers.Repositories
             return await bankContext.Inquiries.ToListAsync();
         }
 
+        public async Task<IEnumerable<Inquiry>> GetOnlyChosenInquiriesAsync()
+        {
+            return await bankContext.Inquiries
+                .Where(i => i.State == InquiryState.chosenByClient)
+                .ToListAsync();
+        }
+
         public async Task<Inquiry?> GetInquiryByIdAsync(int id)
         {
             return await bankContext.Inquiries.FindAsync(id);
+        }
+
+        public async Task<bool> ChangeInquiryState(int id)
+        {
+            var inquiry = GetInquiryByIdAsync(id).Result;
+
+            if (inquiry is not null)
+            {
+                inquiry.State = InquiryState.chosenByClient;
+                return await SaveAsync();
+            }
+            return false;
         }
 
         public async Task<Inquiry> SaveInquiryAsync(Inquiry inquiry)

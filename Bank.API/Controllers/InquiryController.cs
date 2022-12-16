@@ -34,6 +34,20 @@ namespace Bank.API.Controllers
             }
         }
 
+        [HttpGet("/Only/Chosen")]
+        public async Task<ActionResult<List<Inquiry>>> GetOnlyChosenInquiries()
+        {
+            try
+            {
+                var inquiries = await inquiryRepository.GetOnlyChosenInquiriesAsync();
+                return inquiries.Count() > 0 ? Ok(inquiries) : NotFound();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to get Inquiries: {ex.Message}");
+            }
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Inquiry>> GetInquiryByID(int id)
         {
@@ -45,6 +59,21 @@ namespace Bank.API.Controllers
             catch (Exception ex)
             {
                 return BadRequest($"Failed to get Inquiry with Id {id}: {ex.Message}");
+            }
+        }
+
+        [HttpPost("Change/State")]
+        public ActionResult ChangeInquiryState(int id)
+        {
+            try 
+            {
+                bool result = inquiryRepository.ChangeInquiryState(id).Result;
+                return result ? Ok(result) : NotFound();
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to change state of Inquiry with Id {id}: {ex.Message}");
             }
         }
 

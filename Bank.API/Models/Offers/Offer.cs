@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Bank.API.Models.Offers
 {
-    public enum Status
+    public enum Status : byte
     {
         Created,
         Approved,
