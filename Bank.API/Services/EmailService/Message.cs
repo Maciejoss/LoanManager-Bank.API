@@ -1,7 +1,7 @@
 ﻿using Bank.API.DTOs;
 using MimeKit;
 
-namespace Bank.API.Controllers.EmailService
+namespace Bank.API.Services.EmailService
 {
     public class Message
     {

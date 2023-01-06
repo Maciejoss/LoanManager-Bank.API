@@ -1,7 +1,7 @@
 ﻿using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 
-namespace Bank.API.Controllers.PdfService;
+namespace Bank.API.Services.PdfService;
 
 public class PdfCreator
 {

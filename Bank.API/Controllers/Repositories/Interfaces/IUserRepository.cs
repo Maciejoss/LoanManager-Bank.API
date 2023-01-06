@@ -1,6 +1,6 @@
 ﻿using Bank.API.Models.Users;
 
-namespace Bank.API.Repositories.Interfaces
+namespace Bank.API.Controllers.Repositories.Interfaces
 {
     public interface IUserRepository
     {

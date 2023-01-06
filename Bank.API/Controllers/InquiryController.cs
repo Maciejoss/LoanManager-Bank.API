@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Bank.API.DTOs;
 using Bank.API.Models.Offers;
 using Bank.API.Controllers.Repositories.Interfaces;
-using Bank.API.Repositories.Interfaces;
 
 namespace Bank.API.Controllers
 {

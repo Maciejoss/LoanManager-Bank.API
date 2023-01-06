@@ -1,5 +1,5 @@
-﻿using Bank.API.Controllers.EmailService;
-using Bank.API.DTOs;
+﻿using Bank.API.DTOs;
+using Bank.API.Services.EmailService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bank.API.Controllers

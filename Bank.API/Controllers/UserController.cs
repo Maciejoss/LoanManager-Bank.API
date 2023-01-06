@@ -1,5 +1,5 @@
-﻿using Bank.API.Models.Users;
-using Bank.API.Repositories.Interfaces;
+﻿using Bank.API.Controllers.Repositories.Interfaces;
+using Bank.API.Models.Users;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bank.API.Controllers
