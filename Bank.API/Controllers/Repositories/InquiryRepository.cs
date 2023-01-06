@@ -26,12 +26,12 @@ namespace Bank.API.Controllers.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Inquiry?> GetInquiryByIdAsync(Guid id)
+        public async Task<Inquiry?> GetInquiryByIdAsync(int id)
         {
             return await bankContext.Inquiries.FindAsync(id);
         }
 
-        public async Task<bool> ChangeInquiryState(Guid id)
+        public async Task<bool> ChangeInquiryState(int id)
         {
             var inquiry = GetInquiryByIdAsync(id).Result;
 
