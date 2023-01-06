@@ -49,7 +49,7 @@ namespace Bank.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Inquiry>> GetInquiryByID(int id)
+        public async Task<ActionResult<Inquiry>> GetInquiryByID(Guid id)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace Bank.API.Controllers
         }
 
         [HttpPost("Change/State")]
-        public ActionResult ChangeInquiryState(int id)
+        public ActionResult ChangeInquiryState(Guid id)
         {
             try 
             {

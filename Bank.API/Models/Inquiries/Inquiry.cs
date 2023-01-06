@@ -10,7 +10,7 @@ namespace Bank.API.Models.Inquiries
     }
     public class Inquiry
     {
-        public int InquiryID { get; private set; }
+        public Guid InquiryID { get; private set; }
         public Client Client { get; private set; }
         public double Value { get; private set; }
         public int InstallmentsNumber { get; private set; }
