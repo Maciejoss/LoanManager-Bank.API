@@ -28,12 +28,12 @@ namespace Bank.API.Controllers.Repositories
             return await bankContext.Offers.ToListAsync();
         }
         
-        public async Task<Offer?> GetOfferByIdAsync(Guid id)
+        public async Task<Offer?> GetOfferByIdAsync(int id)
         {
             return await bankContext.Offers.FindAsync(id);
         }
 
-        public Task<bool> ChangeOfferState(Guid id)
+        public Task<bool> ChangeOfferState(int id)
         {
             throw new NotImplementedException();
         }

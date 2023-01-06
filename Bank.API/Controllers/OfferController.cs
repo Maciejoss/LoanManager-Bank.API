@@ -17,7 +17,7 @@ public class OfferController : ControllerBase
     
     
     [HttpGet("{id}")]
-    public async Task<ActionResult<Offer>> GetOfferByID(Guid id)
+    public async Task<ActionResult<Offer>> GetOfferByID(int id)
     {
         try
         {
@@ -44,8 +44,8 @@ public class OfferController : ControllerBase
         }
     }
     
-    [HttpGet("file/{id}")]
-    public async Task<ActionResult<Offer>> GetPdfFile(Guid id)
+    [HttpGet("{id}/document")]
+    public async Task<ActionResult<Offer>> GetPdfFile(int id)
     {
         try
         {
