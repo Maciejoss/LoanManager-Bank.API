@@ -57,4 +57,6 @@ public class OfferController : ControllerBase
             return BadRequest($"Failed to get Offer with Id {id}: {ex.Message}");
         }
     }
+   
+    //todo create HttpPost to post document to blob storage
 }

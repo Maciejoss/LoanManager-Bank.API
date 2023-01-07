@@ -96,7 +96,7 @@ namespace Bank.API.Controllers
                 
                 var offer = new Offer(inquiry);
                 await _offerRepository.SaveOfferAsync(offer);
-                
+                // to do: save created offer to blob storage
                 return Ok(offer);
             }
             catch(Exception ex)
