@@ -1,9 +1,7 @@
 using Bank.API;
-using Bank.API.Controllers.EmailService;
 using Bank.API.Controllers.Repositories;
 using Bank.API.Controllers.Repositories.Interfaces;
-using Bank.API.Repositories;
-using Bank.API.Repositories.Interfaces;
+using Bank.API.Services.EmailService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 

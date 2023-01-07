@@ -1,4 +1,4 @@
-﻿namespace Bank.API.Controllers.EmailService
+﻿namespace Bank.API.Services.EmailService
 {
     public class EmailConfiguration
     {

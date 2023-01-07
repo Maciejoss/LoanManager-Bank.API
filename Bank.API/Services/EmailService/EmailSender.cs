@@ -1,7 +1,7 @@
 ﻿using MailKit.Net.Smtp;
 using MimeKit;
 
-namespace Bank.API.Controllers.EmailService
+namespace Bank.API.Services.EmailService
 {
     public class EmailSender : IEmailSender
     {

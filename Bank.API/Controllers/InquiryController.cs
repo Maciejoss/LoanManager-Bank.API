@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Bank.API.DTOs;
 using Bank.API.Models.Offers;
 using Bank.API.Controllers.Repositories.Interfaces;
-using Bank.API.Repositories.Interfaces;
 
 namespace Bank.API.Controllers
 {
@@ -11,13 +10,17 @@ namespace Bank.API.Controllers
     [ApiController]
     public class InquiryController : ControllerBase
     {
-        private readonly IInquiryRepository inquiryRepository;
-        private readonly IUserRepository userRepository;
+        private readonly IInquiryRepository _inquiryRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IOfferRepository _offerRepository;
 
-        public InquiryController(IInquiryRepository _inquiryRepository, IUserRepository _userRepository)
+        public InquiryController(IInquiryRepository inquiryRepository, 
+            IUserRepository userRepository,
+            IOfferRepository offerRepository)
         {
-            inquiryRepository = _inquiryRepository;
-            userRepository = _userRepository;
+            _inquiryRepository = inquiryRepository;
+            _userRepository = userRepository;
+            _offerRepository = offerRepository;
         }
 
         [HttpGet]
@@ -25,7 +28,7 @@ namespace Bank.API.Controllers
         {
             try
             {
-                var inquiries = await inquiryRepository.GetAllInquiriesAsync();
+                var inquiries = await _inquiryRepository.GetAllInquiriesAsync();
                 return inquiries.Count() > 0 ? Ok(inquiries) : NotFound();
             }
             catch (Exception ex)
@@ -39,7 +42,7 @@ namespace Bank.API.Controllers
         {
             try
             {
-                var inquiries = await inquiryRepository.GetOnlyChosenInquiriesAsync();
+                var inquiries = await _inquiryRepository.GetOnlyChosenInquiriesAsync();
                 return inquiries.Count() > 0 ? Ok(inquiries) : NotFound();
             }
             catch (Exception ex)
@@ -53,7 +56,7 @@ namespace Bank.API.Controllers
         {
             try
             {
-                var inquiry = await inquiryRepository.GetInquiryByIdAsync(id);
+                var inquiry = await _inquiryRepository.GetInquiryByIdAsync(id);
                 return inquiry is not null ? Ok(inquiry) : NotFound();
             }
             catch (Exception ex)
@@ -67,7 +70,7 @@ namespace Bank.API.Controllers
         {
             try 
             {
-                bool result = inquiryRepository.ChangeInquiryState(id).Result;
+                bool result = _inquiryRepository.ChangeInquiryState(id).Result;
                 return result ? Ok(result) : NotFound();
 
             }
@@ -85,13 +88,16 @@ namespace Bank.API.Controllers
                 var validationResult = inquiryDto.Validate();
                 if (!validationResult.isValid) return BadRequest(validationResult.message);
 
-                var client = await userRepository.GetClientByIdAsync(inquiryDto.ClientID);
+                var client = await _userRepository.GetClientByIdAsync(inquiryDto.ClientID);
                 if (client is null) return NotFound();
+                
                 Inquiry inquiry = new Inquiry(client, inquiryDto);
-
-                await inquiryRepository.SaveInquiryAsync(inquiry);
-
-                return Ok(new Offer(inquiry));
+                await _inquiryRepository.SaveInquiryAsync(inquiry);
+                
+                var offer = new Offer(inquiry);
+                await _offerRepository.SaveOfferAsync(offer);
+                // to do: save created offer to blob storage
+                return Ok(offer);
             }
             catch(Exception ex)
             {

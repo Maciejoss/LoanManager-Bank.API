@@ -1,8 +1,8 @@
-﻿using Bank.API.Models.Users;
-using Bank.API.Repositories.Interfaces;
+﻿using Bank.API.Controllers.Repositories.Interfaces;
+using Bank.API.Models.Users;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bank.API.Repositories
+namespace Bank.API.Controllers.Repositories
 {
     public class UserRepository : IUserRepository
     {
