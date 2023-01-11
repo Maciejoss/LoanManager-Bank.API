@@ -14,14 +14,14 @@ namespace Bank.API.Models.Offers
     public class Offer
     {
         [Key]
-        public Guid OfferID { get; private set; }
+        public int OfferID { get; private set; }
         public double Percentage { get; private set; }
         public double MonthlyInstallment { get; private set; }
         public double RequestedValue { get; private set; }
         public int RequestedPeriodInMonth { get; private set; }
         public int StatusID { get; private set; }
         public string StatusDescription { get => ((Status)StatusID).ToString(); }
-        public Guid InquiryID { get; private set; }
+        public int InquiryID { get; private set; }
         public DateTime CreateDate { get; private set; }
         public DateTime UpdateDate { get; private set; }
         public Employee? Reviewer { get; private set; }

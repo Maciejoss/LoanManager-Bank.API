@@ -5,20 +5,37 @@ namespace Bank.API.Services.PdfService;
 
 public class PdfCreator
 {
-    public PdfDocument CreateDocument(int offerId)
+    public MemoryStream CreateDocument(int offerId)
+    {
+        var document = GeneratePdf(offerId);
+
+        return ConvertPdfToMemoryStream(document);
+    }
+
+    private PdfDocument GeneratePdf(int offerId)
     {
         var document = new PdfDocument();
         var page = document.AddPage();
         
-        XGraphics gfx = XGraphics.FromPdfPage(page);
-        XFont font = new XFont("Verdana", 20, XFontStyle.Bold);
+        var gfx = XGraphics.FromPdfPage(page);
+        
+        XPdfFontOptions options = new XPdfFontOptions(PdfFontEncoding.Unicode);
+        
+        XFont font = new XFont("Arial", 20, XFontStyle.Bold, options);
         
         gfx.DrawString($"Offer {offerId} document", font, XBrushes.Black,
             new XRect(0, 0, page.Width, page.Height),
-            XStringFormat.Center);
+            XStringFormats.Center);
         
         string filename = $"{offerId}.pdf";
 
         return document;
+    }
+
+    private MemoryStream ConvertPdfToMemoryStream(PdfDocument document)
+    {
+        var stream = new MemoryStream();
+        document.Save(stream, false);
+        return stream;
     }
 }

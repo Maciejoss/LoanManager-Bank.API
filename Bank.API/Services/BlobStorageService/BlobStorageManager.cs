@@ -1,4 +1,5 @@
 ﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 
 namespace Bank.API.Services.BlobStorageService;
 
@@ -14,8 +15,9 @@ public class BlobStorageManager
 
     public async Task Upload(int offerId, Stream fileContent)
     {
-        var blob = CreateBlob(offerId);
-        await blob.UploadAsync(fileContent);
+        var blobClient = CreateBlob(offerId);
+        await blobClient.UploadAsync(fileContent);
+        await blobClient.SetHttpHeadersAsync(CreateBlobHeaders());
     }
 
     private BlobClient CreateBlob(int offerId)
@@ -24,6 +26,14 @@ public class BlobStorageManager
         var container = new BlobContainerClient(_connectionString, _blobContainerName);
         container.CreateIfNotExistsAsync();
         return container.GetBlobClient(blobName);
+    }
+
+    private BlobHttpHeaders CreateBlobHeaders()
+    {
+       return new BlobHttpHeaders()
+        {
+            ContentType = "application/pdf",
+        };
     }
     
     public async Task<Stream> Download(int offerId)

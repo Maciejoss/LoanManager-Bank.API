@@ -1,36 +1,32 @@
 ﻿using Bank.API.Controllers.Repositories.Interfaces;
-using Bank.API.Models.Inquiries;
 using Bank.API.Models.Offers;
-using Microsoft.AspNetCore.Authentication;
+using Bank.API.Services.BlobStorageService;
+using Bank.API.Services.PdfService;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 
 namespace Bank.API.Controllers.Repositories
 {
     public class OfferRepository: IOfferRepository
     {
-        private readonly BankContext bankContext;
-
-        public OfferRepository(BankContext context)
+        private readonly BankContext _bankContext;
+        private readonly PdfCreator _pdfService;
+        private readonly BlobStorageManager _blobStorage;
+        
+        public OfferRepository(BankContext context, PdfCreator pdfService, BlobStorageManager blobContext)
         {
-            bankContext = context;
-        }
-
-        public async Task<Inquiry> SaveInquiryAsync(Inquiry inquiry)
-        {
-            await bankContext.Inquiries.AddAsync(inquiry);
-            await SaveAsync();
-            return inquiry;
+            _bankContext = context;
+            _pdfService = pdfService;
+            _blobStorage = blobContext;
         }
 
         public async Task<IEnumerable<Offer>> GetAllOffersAsync()
         {
-            return await bankContext.Offers.ToListAsync();
+            return await _bankContext.Offers.ToListAsync();
         }
         
         public async Task<Offer?> GetOfferByIdAsync(int id)
         {
-            return await bankContext.Offers.FindAsync(id);
+            return await _bankContext.Offers.FindAsync(id);
         }
 
         public Task<bool> ChangeOfferState(int id)
@@ -40,14 +36,16 @@ namespace Bank.API.Controllers.Repositories
 
         public async Task<Offer> SaveOfferAsync(Offer offer)
         {
-            await bankContext.Offers.AddAsync(offer);
+            await _bankContext.Offers.AddAsync(offer);
             await SaveAsync();
+            var document = _pdfService.CreateDocument(offer.OfferID);
+            await _blobStorage.Upload(offer.OfferID, document);
             return offer;
         }
 
         public async Task<bool> SaveAsync()
         {
-            return await bankContext.SaveChangesAsync() > 0;
+            return await _bankContext.SaveChangesAsync() > 0;
         }
     }
 }
