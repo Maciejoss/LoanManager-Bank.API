@@ -1,4 +1,6 @@
-﻿using Bank.API.Controllers.Repositories.Interfaces;
+using Bank.API.Controllers.Repositories.Interfaces;
+using Bank.API.Controllers.Repositories;
+using Bank.API.DTOs;
 using Bank.API.Models.Offers;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,7 +31,20 @@ public class OfferController : ControllerBase
             return BadRequest($"Failed to get Offer with Id {id}: {ex.Message}");
         }
     }
-    
+    [HttpPost("Change/State")]
+    public ActionResult ChangeOfferState([FromBody] ChangeOfferStateDTO changeOfferStateDTO)
+    {
+        try
+        {
+            bool result = _offerRepository.ChangeOfferState(changeOfferStateDTO.id, changeOfferStateDTO.employeeId, changeOfferStateDTO.status).Result;
+            return result ? Ok(result) : NotFound();
+
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"Failed to change state of Offer with Id {changeOfferStateDTO.id}: {ex.Message}");
+        }
+    }
     [HttpGet]
     public async Task<ActionResult<List<Offer>>> GetOffers()
     {

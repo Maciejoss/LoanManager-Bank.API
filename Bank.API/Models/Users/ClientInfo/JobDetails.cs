@@ -9,7 +9,7 @@
         public DateTime StartDate { get; init; }
         public DateTime? EndDate { get; init; }
 
-        public JobDetails(int typeId, string name, string description, DateTime startDate, DateTime? endDate)
+        public JobDetails(int typeId, string name, string description, DateTime startDate, DateTime? endDate = null)
         {
             Id = Guid.NewGuid();
             TypeId = typeId;

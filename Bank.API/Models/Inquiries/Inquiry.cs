@@ -3,11 +3,6 @@ using Bank.API.Models.Users;
 
 namespace Bank.API.Models.Inquiries
 {
-    public enum InquiryState : byte
-    {
-        created,
-        chosenByClient,
-    }
     public class Inquiry
     {
         public int InquiryID { get; private set; }
@@ -16,7 +11,6 @@ namespace Bank.API.Models.Inquiries
         public int InstallmentsNumber { get; private set; }
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get => StartDate.AddMonths(InstallmentsNumber); }        
-        public InquiryState State { get; set; }
 
         public Inquiry(Client client, InquiryDto inquiryDto)
         {
@@ -24,8 +18,8 @@ namespace Bank.API.Models.Inquiries
             Value = inquiryDto.Value;
             InstallmentsNumber = inquiryDto.InstallmentsNumber;
             StartDate = inquiryDto.StartDate;
-            State = InquiryState.created;
         }
+
         public Inquiry() { }
     }
 }

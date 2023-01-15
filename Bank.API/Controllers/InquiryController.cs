@@ -37,20 +37,6 @@ namespace Bank.API.Controllers
             }
         }
 
-        [HttpGet("/Only/Chosen")]
-        public async Task<ActionResult<List<Inquiry>>> GetOnlyChosenInquiries()
-        {
-            try
-            {
-                var inquiries = await _inquiryRepository.GetOnlyChosenInquiriesAsync();
-                return inquiries.Count() > 0 ? Ok(inquiries) : NotFound();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Failed to get Inquiries: {ex.Message}");
-            }
-        }
-
         [HttpGet("{id}")]
         public async Task<ActionResult<Inquiry>> GetInquiryByID(int id)
         {

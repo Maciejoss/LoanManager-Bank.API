@@ -1,10 +1,12 @@
 using Bank.API;
 using Bank.API.Controllers.Repositories;
 using Bank.API.Controllers.Repositories.Interfaces;
+using Bank.API.Services.EmailService;
 using Bank.API.Services.BlobStorageService;
 using Bank.API.Services.EmailService;
 using Bank.API.Services.PdfService;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 

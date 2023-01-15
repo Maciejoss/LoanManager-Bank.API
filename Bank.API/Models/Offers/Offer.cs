@@ -2,10 +2,11 @@
 using Bank.API.Models.Users;
 using Microsoft.Identity.Client;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bank.API.Models.Offers
 {
-    public enum Status : byte
+    public enum OfferStatus : byte
     {
         Created,
         Approved,
@@ -20,7 +21,7 @@ namespace Bank.API.Models.Offers
         public double RequestedValue { get; private set; }
         public int RequestedPeriodInMonth { get; private set; }
         public int StatusID { get; private set; }
-        public string StatusDescription { get => ((Status)StatusID).ToString(); }
+        public string StatusDescription { get => ((OfferStatus)StatusID).ToString(); }
         public int InquiryID { get; private set; }
         public DateTime CreateDate { get; private set; }
         public DateTime UpdateDate { get; private set; }
@@ -35,14 +36,14 @@ namespace Bank.API.Models.Offers
             RequestedPeriodInMonth = inquiry.InstallmentsNumber;
             MonthlyInstallment = RequestedValue * Percentage * Math.Pow(1 + Percentage, RequestedPeriodInMonth) /
                 (Math.Pow(1 + Percentage, RequestedPeriodInMonth) - 1);
-            StatusID = (int)Status.Created;
+            StatusID = (int)OfferStatus.Created;
             InquiryID = inquiry.InquiryID;
             CreateDate = DateTime.Now;
             UpdateDate = DateTime.Now;
             DocumentLinkValidDate = DateTime.Now;
         }
         public Offer() { }
-        public void UpdateOfferStatus(Employee employee, Status status)
+        public void UpdateStatus(Employee employee, OfferStatus status)
         {
             StatusID = (int)status;
             UpdateDate = DateTime.Now;

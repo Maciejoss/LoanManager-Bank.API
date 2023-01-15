@@ -1,5 +1,10 @@
 ﻿using Bank.API.Controllers.Repositories.Interfaces;
+using Bank.API.Models.Inquiries;
 using Bank.API.Models.Offers;
+using Bank.API.Models.Users;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using Bank.API.Services.BlobStorageService;
 using Bank.API.Services.PdfService;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +26,9 @@ namespace Bank.API.Controllers.Repositories
 
         public async Task<IEnumerable<Offer>> GetAllOffersAsync()
         {
-            return await _bankContext.Offers.ToListAsync();
+            return await _bankContext.Offers
+                .Include(o => o.Reviewer)
+                .ToListAsync();
         }
         
         public async Task<Offer?> GetOfferByIdAsync(int id)
@@ -31,7 +38,21 @@ namespace Bank.API.Controllers.Repositories
 
         public Task<bool> ChangeOfferState(int id)
         {
-            throw new NotImplementedException();
+            return await _bankContext.Offers
+                .Include(o => o.Reviewer).
+                FirstOrDefaultAsync(o => o.OfferID == id);
+        }
+
+        public async Task<bool> ChangeOfferState(int id, Guid employeeId, OfferStatus status)
+        {
+            Offer? offer = await bankContext.Offers.FindAsync(id);
+            Employee? employee = await bankContext.Employees.FindAsync(employeeId);
+            if (offer is not null && employee is not null)
+            {
+                offer.UpdateStatus(employee, status);
+                return await SaveAsync();
+            }            
+            return false;
         }
 
         public async Task<Offer> SaveOfferAsync(Offer offer)

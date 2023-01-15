@@ -4,6 +4,7 @@ using Bank.API;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bank.API.Migrations
 {
     [DbContext(typeof(BankContext))]
-    partial class BankContextModelSnapshot : ModelSnapshot
+    [Migration("20230114130307_AddSeedClient")]
+    partial class AddSeedClient
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,20 +136,11 @@ namespace Bank.API.Migrations
                         new
                         {
                             Id = new Guid("37846734-172e-4149-8cec-6f43d1eb3f60"),
-                            Email = "klient.jeden@example.com",
+                            Email = "imie.nazwisko@example.com",
                             GovernmentDocumentId = new Guid("9150ebd7-dd84-4c97-bf58-62f1c3611545"),
                             JobDetailsId = new Guid("46b087f9-5c71-401f-a5cf-021274463715"),
-                            Name = "Klient",
-                            Surname = "Jeden"
-                        },
-                        new
-                        {
-                            Id = new Guid("37846734-172e-4149-8cec-6f43d1eb3f06"),
-                            Email = "klient.dwa@example.com",
-                            GovernmentDocumentId = new Guid("9150ebd7-dd84-4c97-bf58-62f1c3611554"),
-                            JobDetailsId = new Guid("46b087f9-5c71-401f-a5cf-021274463751"),
-                            Name = "Klient",
-                            Surname = "Dwa"
+                            Name = "imie",
+                            Surname = "nazwisko"
                         });
                 });
 
@@ -183,14 +177,6 @@ namespace Bank.API.Migrations
                             Name = "Driver License",
                             Number = "number",
                             TypeId = 1
-                        },
-                        new
-                        {
-                            Id = new Guid("9150ebd7-dd84-4c97-bf58-62f1c3611554"),
-                            Description = "Passport",
-                            Name = "Passport",
-                            Number = "number",
-                            TypeId = 2
                         });
                 });
 
@@ -227,17 +213,8 @@ namespace Bank.API.Migrations
                             Id = new Guid("46b087f9-5c71-401f-a5cf-021274463715"),
                             Description = "Director",
                             Name = "Director",
-                            StartDate = new DateTime(2022, 8, 14, 14, 19, 20, 366, DateTimeKind.Local).AddTicks(112),
+                            StartDate = new DateTime(2022, 8, 14, 14, 3, 7, 334, DateTimeKind.Local).AddTicks(5606),
                             TypeId = 30
-                        },
-                        new
-                        {
-                            Id = new Guid("46b087f9-5c71-401f-a5cf-021274463751"),
-                            Description = "Agent",
-                            EndDate = new DateTime(2023, 1, 13, 14, 19, 20, 366, DateTimeKind.Local).AddTicks(235),
-                            Name = "Agent",
-                            StartDate = new DateTime(2021, 10, 14, 14, 19, 20, 366, DateTimeKind.Local).AddTicks(231),
-                            TypeId = 37
                         });
                 });
 
@@ -266,7 +243,7 @@ namespace Bank.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6"),
+                            Id = new Guid("abde25ad-214c-4ce3-9016-b194082be6ad"),
                             Email = "pracownik.jeden01@gmail.com",
                             Name = "pracownik",
                             Surname = "jeden"
