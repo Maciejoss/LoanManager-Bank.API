@@ -1,6 +1,7 @@
 ﻿using Bank.API.Controllers.Repositories.Interfaces;
 using Bank.API.Models.Inquiries;
 using Bank.API.Models.Offers;
+using Bank.API.Models.Users;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
@@ -25,17 +26,28 @@ namespace Bank.API.Controllers.Repositories
 
         public async Task<IEnumerable<Offer>> GetAllOffersAsync()
         {
-            return await bankContext.Offers.ToListAsync();
+            return await bankContext.Offers
+                .Include(o => o.Reviewer)
+                .ToListAsync();
         }
         
         public async Task<Offer?> GetOfferByIdAsync(int id)
         {
-            return await bankContext.Offers.FindAsync(id);
+            return await bankContext.Offers
+                .Include(o => o.Reviewer).
+                FirstOrDefaultAsync(o => o.OfferID == id);
         }
 
-        public Task<bool> ChangeOfferState(int id)
+        public async Task<bool> ChangeOfferState(int id, Guid employeeId, OfferStatus status)
         {
-            throw new NotImplementedException();
+            Offer? offer = await bankContext.Offers.FindAsync(id);
+            Employee? employee = await bankContext.Employees.FindAsync(employeeId);
+            if (offer is not null && employee is not null)
+            {
+                offer.UpdateStatus(employee, status);
+                return await SaveAsync();
+            }            
+            return false;
         }
 
         public async Task<Offer> SaveOfferAsync(Offer offer)

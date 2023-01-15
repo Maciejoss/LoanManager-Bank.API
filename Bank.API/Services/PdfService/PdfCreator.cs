@@ -5,7 +5,7 @@ namespace Bank.API.Services.PdfService;
 
 public class PdfCreator
 {
-    public PdfDocument CreateDocument(int offerId)
+/*    public PdfDocument CreateDocument(int offerId)
     {
         var document = new PdfDocument();
         var page = document.AddPage();
@@ -20,5 +20,5 @@ public class PdfCreator
         string filename = $"{offerId}.pdf";
 
         return document;
-    }
+    }*/
 }

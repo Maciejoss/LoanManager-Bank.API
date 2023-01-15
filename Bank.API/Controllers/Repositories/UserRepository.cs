@@ -15,7 +15,10 @@ namespace Bank.API.Controllers.Repositories
 
         public async Task<IEnumerable<Client>> GetAllClientsAsync()
         {
-            return await bankContext.Clients.ToListAsync();
+            return await bankContext.Clients
+                .Include(c => c.GovernmentDocument)
+                .Include(c => c.JobDetails)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Employee>> GetAllEmployeesAsync()
@@ -25,7 +28,10 @@ namespace Bank.API.Controllers.Repositories
 
         public async Task<Client?> GetClientByIdAsync(Guid id)
         {
-            return await bankContext.Clients.FindAsync(id);
+            return await bankContext.Clients
+                .Include(c => c.GovernmentDocument)
+                .Include(c => c.JobDetails)
+                .FirstOrDefaultAsync(c => c.Id == id);
         }        
 
         public async Task<Employee?> GetEmployeeByIdAsync(Guid id)

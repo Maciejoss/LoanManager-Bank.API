@@ -23,7 +23,7 @@ namespace Bank.API.DTOs
 
             if (Value <= 0) return (false, "Inquiry Value must be greater provided and greater than '0'");
             if (InstallmentsNumber <= 0) return (false, "Installments Number must be provided and greater than '0'");
-            if (StartDate.Subtract(DateTime.Now).Days * 24 + StartDate.Subtract(DateTime.Now).Hours <= 24) return (false, "Start Date must be provided and at least 24h from now");
+            if (DateTime.Now.Subtract(StartDate).Days * 24 + DateTime.Now.Subtract(StartDate).Hours <= 24) return (false, "Start Date must be provided and at least 24h from now");
             return (true, "OK");
         }
     }

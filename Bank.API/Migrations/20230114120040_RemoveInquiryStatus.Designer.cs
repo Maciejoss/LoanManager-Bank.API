@@ -4,6 +4,7 @@ using Bank.API;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bank.API.Migrations
 {
     [DbContext(typeof(BankContext))]
-    partial class BankContextModelSnapshot : ModelSnapshot
+    [Migration("20230114120040_RemoveInquiryStatus")]
+    partial class RemoveInquiryStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,26 +131,6 @@ namespace Bank.API.Migrations
                     b.HasIndex("JobDetailsId");
 
                     b.ToTable("Clients");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("37846734-172e-4149-8cec-6f43d1eb3f60"),
-                            Email = "klient.jeden@example.com",
-                            GovernmentDocumentId = new Guid("9150ebd7-dd84-4c97-bf58-62f1c3611545"),
-                            JobDetailsId = new Guid("46b087f9-5c71-401f-a5cf-021274463715"),
-                            Name = "Klient",
-                            Surname = "Jeden"
-                        },
-                        new
-                        {
-                            Id = new Guid("37846734-172e-4149-8cec-6f43d1eb3f06"),
-                            Email = "klient.dwa@example.com",
-                            GovernmentDocumentId = new Guid("9150ebd7-dd84-4c97-bf58-62f1c3611554"),
-                            JobDetailsId = new Guid("46b087f9-5c71-401f-a5cf-021274463751"),
-                            Name = "Klient",
-                            Surname = "Dwa"
-                        });
                 });
 
             modelBuilder.Entity("Bank.API.Models.Users.ClientInfo.GovernmentDocument", b =>
@@ -174,24 +157,6 @@ namespace Bank.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("GovernmentDocument");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("9150ebd7-dd84-4c97-bf58-62f1c3611545"),
-                            Description = "Driver License",
-                            Name = "Driver License",
-                            Number = "number",
-                            TypeId = 1
-                        },
-                        new
-                        {
-                            Id = new Guid("9150ebd7-dd84-4c97-bf58-62f1c3611554"),
-                            Description = "Passport",
-                            Name = "Passport",
-                            Number = "number",
-                            TypeId = 2
-                        });
                 });
 
             modelBuilder.Entity("Bank.API.Models.Users.ClientInfo.JobDetails", b =>
@@ -220,25 +185,6 @@ namespace Bank.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("JobDetails");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("46b087f9-5c71-401f-a5cf-021274463715"),
-                            Description = "Director",
-                            Name = "Director",
-                            StartDate = new DateTime(2022, 8, 14, 14, 19, 20, 366, DateTimeKind.Local).AddTicks(112),
-                            TypeId = 30
-                        },
-                        new
-                        {
-                            Id = new Guid("46b087f9-5c71-401f-a5cf-021274463751"),
-                            Description = "Agent",
-                            EndDate = new DateTime(2023, 1, 13, 14, 19, 20, 366, DateTimeKind.Local).AddTicks(235),
-                            Name = "Agent",
-                            StartDate = new DateTime(2021, 10, 14, 14, 19, 20, 366, DateTimeKind.Local).AddTicks(231),
-                            TypeId = 37
-                        });
                 });
 
             modelBuilder.Entity("Bank.API.Models.Users.Employee", b =>
@@ -266,7 +212,7 @@ namespace Bank.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6"),
+                            Id = new Guid("8dbcaef1-1f56-44a2-ac1b-0bfdee1832d0"),
                             Email = "pracownik.jeden01@gmail.com",
                             Name = "pracownik",
                             Surname = "jeden"
