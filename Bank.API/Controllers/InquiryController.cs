@@ -50,22 +50,7 @@ namespace Bank.API.Controllers
                 return BadRequest($"Failed to get Inquiry with Id {id}: {ex.Message}");
             }
         }
-
-        [HttpPost("Change/State")]
-        public ActionResult ChangeInquiryState(int id)
-        {
-            try 
-            {
-                bool result = _inquiryRepository.ChangeInquiryState(id).Result;
-                return result ? Ok(result) : NotFound();
-
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Failed to change state of Inquiry with Id {id}: {ex.Message}");
-            }
-        }
-
+        
         [HttpPost]
         public async Task<ActionResult<Offer>> SaveInquiry([FromBody] InquiryDto inquiryDto)
         {

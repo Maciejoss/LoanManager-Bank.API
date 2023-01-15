@@ -36,17 +36,10 @@ namespace Bank.API.Controllers.Repositories
             return await _bankContext.Offers.FindAsync(id);
         }
 
-        public Task<bool> ChangeOfferState(int id)
-        {
-            return await _bankContext.Offers
-                .Include(o => o.Reviewer).
-                FirstOrDefaultAsync(o => o.OfferID == id);
-        }
-
         public async Task<bool> ChangeOfferState(int id, Guid employeeId, OfferStatus status)
         {
-            Offer? offer = await bankContext.Offers.FindAsync(id);
-            Employee? employee = await bankContext.Employees.FindAsync(employeeId);
+            Offer? offer = await _bankContext.Offers.FindAsync(id);
+            Employee? employee = await _bankContext.Employees.FindAsync(employeeId);
             if (offer is not null && employee is not null)
             {
                 offer.UpdateStatus(employee, status);
