@@ -2,6 +2,9 @@ using Bank.API;
 using Bank.API.Controllers.Repositories;
 using Bank.API.Controllers.Repositories.Interfaces;
 using Bank.API.Services.EmailService;
+using Bank.API.Services.BlobStorageService;
+using Bank.API.Services.EmailService;
+using Bank.API.Services.PdfService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -18,9 +21,12 @@ var emailConfig = builder.Configuration
         .Get<EmailConfiguration>();
 builder.Services.AddSingleton(emailConfig);
 
+builder.Services.AddTransient<PdfCreator>();
+builder.Services.AddTransient<BlobStorageManager>();
+
 builder.Services.AddScoped<IEmailSender, EmailSender>();
-builder.Services.AddScoped<IOfferRepository, OfferRepository>();
 builder.Services.AddScoped<IInquiryRepository, InquiryRepository>();
+builder.Services.AddScoped<IOfferRepository, OfferRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddControllers();
