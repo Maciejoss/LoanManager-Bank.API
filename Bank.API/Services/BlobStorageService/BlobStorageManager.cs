@@ -51,7 +51,7 @@ public class BlobStorageManager
         var sasBuilder = new BlobSasBuilder()
         {
             BlobContainerName = _blobContainerName,
-            BlobName = offerId.ToString(),
+            BlobName = $"{offerId.ToString()}.pdf",
             ExpiresOn = DateTime.UtcNow.AddMinutes(5),
         };
 
