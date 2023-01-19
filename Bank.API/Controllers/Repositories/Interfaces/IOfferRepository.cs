@@ -10,6 +10,7 @@ namespace Bank.API.Controllers.Repositories.Interfaces
         Task<Offer?> GetOfferByIdAsync(int id);
         Task<bool> ChangeOfferState(int id, Guid employeeId, OfferStatus status);
         Task<Offer> SaveOfferAsync(Offer offer);
+        Task<string> GetDocumentPath(int id);
         Task<bool> SaveAsync();
     }
 }

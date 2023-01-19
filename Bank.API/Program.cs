@@ -20,8 +20,9 @@ var emailConfig = builder.Configuration
         .GetSection("EmailConfiguration")
         .Get<EmailConfiguration>();
 builder.Services.AddSingleton(emailConfig);
-builder.Services.AddSingleton<PdfCreator>();
-builder.Services.AddSingleton<BlobStorageManager>();
+
+builder.Services.AddTransient<PdfCreator>();
+builder.Services.AddTransient<BlobStorageManager>();
 
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IInquiryRepository, InquiryRepository>();

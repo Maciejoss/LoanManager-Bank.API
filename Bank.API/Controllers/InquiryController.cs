@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Bank.API.DTOs;
 using Bank.API.Models.Offers;
 using Bank.API.Controllers.Repositories.Interfaces;
+using Bank.API.Services.BlobStorageService;
+using Bank.API.Services.PdfService;
 
 namespace Bank.API.Controllers
 {
@@ -13,14 +15,19 @@ namespace Bank.API.Controllers
         private readonly IInquiryRepository _inquiryRepository;
         private readonly IUserRepository _userRepository;
         private readonly IOfferRepository _offerRepository;
-
+        private readonly BlobStorageManager _blobStorage;
+        private readonly PdfCreator _pdfService;
         public InquiryController(IInquiryRepository inquiryRepository, 
             IUserRepository userRepository,
-            IOfferRepository offerRepository)
+            IOfferRepository offerRepository,
+            BlobStorageManager storageManager,
+            PdfCreator pdfService)
         {
             _inquiryRepository = inquiryRepository;
             _userRepository = userRepository;
             _offerRepository = offerRepository;
+            _blobStorage = storageManager;
+            _pdfService = pdfService;
         }
 
         [HttpGet]
@@ -67,7 +74,8 @@ namespace Bank.API.Controllers
                 
                 var offer = new Offer(inquiry);
                 await _offerRepository.SaveOfferAsync(offer);
-                // to do: save created offer to blob storage
+                var document = _pdfService.CreateDocument(offer.OfferID);
+                await _blobStorage.Upload(offer.OfferID, document);
                 return Ok(offer);
             }
             catch(Exception ex)

@@ -1,6 +1,5 @@
 ﻿using Bank.API.Models.Inquiries;
 using Bank.API.Models.Users;
-using Microsoft.Identity.Client;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -55,5 +54,6 @@ namespace Bank.API.Models.Offers
             DocumentLink = documentLink;
             DocumentLinkValidDate = DateTime.Now.AddYears(1);
         }
+        
     }
 }

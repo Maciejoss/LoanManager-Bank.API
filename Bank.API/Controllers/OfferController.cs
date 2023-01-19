@@ -1,7 +1,10 @@
+using System.Net;
+using System.Net.Http.Headers;
 using Bank.API.Controllers.Repositories.Interfaces;
 using Bank.API.Controllers.Repositories;
 using Bank.API.DTOs;
 using Bank.API.Models.Offers;
+using Bank.API.Services.BlobStorageService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bank.API.Controllers;
@@ -10,9 +13,9 @@ namespace Bank.API.Controllers;
 [ApiController]
 public class OfferController : ControllerBase
 {
-    private IOfferRepository _offerRepository;
+    private readonly IOfferRepository _offerRepository;
     
-    OfferController(IOfferRepository offerRepository)
+    public OfferController(IOfferRepository offerRepository)
     {
         _offerRepository = offerRepository;
     }
@@ -51,7 +54,7 @@ public class OfferController : ControllerBase
         try
         {
             var offers = await _offerRepository.GetAllOffersAsync();
-            return offers.Count() > 0 ? Ok(offers) : NotFound();
+            return offers.Any() ? Ok(offers) : NotFound();
         }
         catch (Exception ex)
         {
@@ -60,18 +63,20 @@ public class OfferController : ControllerBase
     }
     
     [HttpGet("{id}/document")]
-    public async Task<ActionResult<Offer>> GetPdfFile(int id)
+    public async Task<ActionResult<string>> GetPdfFile(int id)
     {
         try
         {
-            var offer = await _offerRepository.GetOfferByIdAsync(id);
-            return offer is not null ? Ok(offer) : NotFound();
+            var filePath = await _offerRepository.GetDocumentPath(id);
+
+            return Ok(filePath);
+
         }
         catch (Exception ex)
         {
             return BadRequest($"Failed to get Offer with Id {id}: {ex.Message}");
         }
     }
-   
+
     //todo create HttpPost to post document to blob storage
 }

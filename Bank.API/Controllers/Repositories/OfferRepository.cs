@@ -61,5 +61,10 @@ namespace Bank.API.Controllers.Repositories
         {
             return await _bankContext.SaveChangesAsync() > 0;
         }
+
+        public async Task<string> GetDocumentPath(int id)
+        {
+            return await Task.FromResult(_blobStorage.GetDocument(id));
+        }
     }
 }
