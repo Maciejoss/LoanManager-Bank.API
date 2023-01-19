@@ -16,6 +16,8 @@ namespace Bank.API.Controllers
         }
 
         [HttpGet("Clients")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<List<Client>>> GetClients()
         {
             try
@@ -25,11 +27,13 @@ namespace Bank.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Failed to get Clients: {ex.Message}");
+                return NotFound($"Failed to get Clients: {ex.Message}");
             }
         }
 
         [HttpGet("Employees")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<List<Client>>> GetEmployees()
         {
             try
@@ -39,24 +43,11 @@ namespace Bank.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Failed to get Employees: {ex.Message}");
+                return NotFound($"Failed to get Employees: {ex.Message}");
             }
         }
-
-        [HttpGet("Client/{id}")]
-        public async Task<ActionResult<Client>> GetClientByID(Guid id)
-        {
-            try
-            {
-                var client = await userRepository.GetClientByIdAsync(id);
-                return client is not null ? Ok(client) : NotFound();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Failed to get Client with Id {id}: {ex.Message}");
-            }
-        }
-
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("Employee/{id:Guid}")]
         public async Task<ActionResult<Employee>> GetEmployeeByID(Guid id)
         {
@@ -67,10 +58,13 @@ namespace Bank.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Failed to get Employee with Id {id}: {ex.Message}");
+                return NotFound($"Failed to get Employee with Id {id}: {ex.Message}");
             }
         }
+        
         [HttpGet("Employee/{email}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Employee>> GetEmployeeByEmail(string email)
         {
             try
@@ -80,7 +74,7 @@ namespace Bank.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Failed to get Employee with email {email}: {ex.Message}");
+                return NotFound($"Failed to get Employee with email {email}: {ex.Message}");
             }
         }
     }

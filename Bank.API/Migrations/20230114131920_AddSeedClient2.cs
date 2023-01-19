@@ -21,7 +21,7 @@ namespace Bank.API.Migrations
                 keyColumn: "Id",
                 keyValue: new Guid("37846734-172e-4149-8cec-6f43d1eb3f60"),
                 columns: new[] { "Email", "Name", "Surname" },
-                values: new object[] { "klient.jeden@example.com", "Klient", "Jeden" });
+                values: new object[] { "mystril323@gmail.com", "Jan", "Przykładowy" });
 
             migrationBuilder.InsertData(
                 table: "Employees",
