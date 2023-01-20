@@ -22,6 +22,8 @@ public class OfferController : ControllerBase
     
     
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<Offer>> GetOfferByID(int id)
     {
         try
@@ -31,10 +33,12 @@ public class OfferController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest($"Failed to get Offer with Id {id}: {ex.Message}");
+            return NotFound($"Failed to get Offer with Id {id}: {ex.Message}");
         }
     }
     [HttpPost("Change/State")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ActionResult ChangeOfferState([FromBody] ChangeOfferStateDTO changeOfferStateDTO)
     {
         try
@@ -49,6 +53,8 @@ public class OfferController : ControllerBase
         }
     }
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<List<Offer>>> GetOffers()
     {
         try
@@ -58,11 +64,13 @@ public class OfferController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest($"Failed to get Offers: {ex.Message}");
+            return NotFound($"Failed to get Offers: {ex.Message}");
         }
     }
     
     [HttpGet("{id}/document")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<string>> GetPdfFile(int id)
     {
         try
@@ -74,7 +82,7 @@ public class OfferController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest($"Failed to get Offer with Id {id}: {ex.Message}");
+            return NotFound($"Failed to get Offer with Id {id}: {ex.Message}");
         }
     }
 

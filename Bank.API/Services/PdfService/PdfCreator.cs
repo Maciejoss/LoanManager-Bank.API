@@ -12,7 +12,7 @@ public class PdfCreator
         return ConvertPdfToMemoryStream(document);
     }
 
-    private PdfDocument GeneratePdf(int offerId)
+    public PdfDocument GeneratePdf(int offerId)
     {
         var document = new PdfDocument();
         var page = document.AddPage();
@@ -32,7 +32,7 @@ public class PdfCreator
         return document;
     }
 
-    private MemoryStream ConvertPdfToMemoryStream(PdfDocument document)
+    public MemoryStream ConvertPdfToMemoryStream(PdfDocument document)
     {
         var stream = new MemoryStream();
         document.Save(stream, false);
